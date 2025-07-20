@@ -1,7 +1,8 @@
 import 'package:my_assistance/app_import.dart';
+import 'package:my_assistance/module/history/controller/previous_chat_controller.dart';
 
-class ChatPage extends GetView<ChatController> {
-  const ChatPage({super.key});
+class PreviousChatPage extends GetView<PreviousChatController> {
+  const PreviousChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ChatPage extends GetView<ChatController> {
                   ? Center(child: emptyChatView())
                   : Column(
                       children: [
-                        Expanded(child: chatView(controller)),
+                        Expanded(child: chatView()),
                         //stopTextGeneratingView(),
                       ],
                     ),
@@ -34,16 +35,16 @@ class ChatPage extends GetView<ChatController> {
     });
   }
 
-  Widget chatView(ChatController controller) {
+  Widget chatView() {
     return ListView.builder(
         shrinkWrap: true,
         controller: controller.scrollController,
         itemCount: controller.chatList.length,
         itemBuilder: (context, index) {
-          ChatModel chatModel = controller.chatList[index];
-          return chatModel.isUser
-              ? userChatView(chatModel.chat)
-              : senderChatView(chatModel.chat);
+          ChatMessageModel chatModel = controller.chatList[index];
+          return chatModel.sender
+              ? userChatView(chatModel.message)
+              : senderChatView(chatModel.message);
         });
   }
 

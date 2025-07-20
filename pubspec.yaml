@@ -32,6 +32,10 @@ dependencies:
   hive: ^2.2.3
   shared_preferences: ^2.5.3
 
+  #firebase
+  firebase_core: ^3.15.1
+  cloud_firestore: ^5.6.11
+  firebase_crashlytics: ^4.3.9
 
 dev_dependencies:
   flutter_test:

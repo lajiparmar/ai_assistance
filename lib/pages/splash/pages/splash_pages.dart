@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_assistance/app_import.dart';
 
 class SplashPage extends StatefulWidget {
@@ -11,6 +12,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    print('splash screen is called or not ');
     Future.delayed(
         const Duration(seconds: 3), () => RouterHelper.gotoDashboardPage());
   }

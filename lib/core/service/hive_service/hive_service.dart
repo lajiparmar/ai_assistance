@@ -1,12 +1,14 @@
-import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-//final GetIt dependencyLocator=GetIt.instance.allowReassignment=true;
+import 'package:my_assistance/data/hive_model/chat_model/chat_model.dart';
+
+
 mixin HiveHelper{
   static void registerTypeAdaptor(){
-   // Hive.registerAdapter(adapter)
+    Hive.registerAdapter(ChatMessageModelAdapter());
+    Hive.registerAdapter(ConversationModelAdapter());
   }
-  static void openBox(){
-
+  static Future<void> openBox()async{
+    await Hive.openBox<ConversationModel>('conversations');
   }
 
 }

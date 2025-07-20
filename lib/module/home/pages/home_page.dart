@@ -1,8 +1,18 @@
 import 'package:my_assistance/app_import.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    print('init state is called or not in the main page ');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return AppScaffold(body: _bodyView());

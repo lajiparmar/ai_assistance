@@ -11,40 +11,42 @@ class HistoryPage extends GetView<HistoryController> {
   }
 
   Widget _bodyView(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 40),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: LogoAppbar(
-            title: StringConstant.history,
-            actions: [
-              InkWell(
-                onTap: () => RouterHelper.gotoHistorySearchPage(),
-                child: const AppImage(
-                    image: AssetConstant.icSearch, height: 20, width: 20),
-              ),
-              const SizedBox(width: 20),
-              InkWell(
-                onTap: () => clearAllBottomSheet(context),
-                child: const AppImage(
-                  image: AssetConstant.icDelete,
-                  height: 20,
-                  width: 20,
+    return Obx(
+      () => Column(
+        children: [
+          const SizedBox(height: 40),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: LogoAppbar(
+              title: StringConstant.history,
+              actions: [
+                InkWell(
+                  onTap: () => RouterHelper.gotoHistorySearchPage(),
+                  child: const AppImage(
+                      image: AssetConstant.icSearch, height: 20, width: 20),
                 ),
-              ),
-            ],
+                const SizedBox(width: 20),
+                InkWell(
+                  onTap: () => clearAllBottomSheet(context),
+                  child: const AppImage(
+                    image: AssetConstant.icDelete,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Expanded(
-          child: controller.historyModelList.isEmpty
-              ? Center(
-                  child: historyEmptyView(),
-                )
-              : historyListView(),
-        ),
-      ],
+          const SizedBox(height: 10),
+          Expanded(
+            child: controller.historyList.isEmpty
+                ? Center(
+                    child: historyEmptyView(),
+                  )
+                : historyListView(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -52,14 +54,14 @@ class HistoryPage extends GetView<HistoryController> {
     return ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         shrinkWrap: true,
-        itemCount: controller.historyModelList.length,
+        itemCount: controller.historyList.length,
         itemBuilder: (context, index) {
-          HistoryModel historyModel = controller.historyModelList[index];
-          return slidableListTile(historyModel);
+          ConversationModel conversationModel = controller.historyList[index];
+          return slidableListTile(conversationModel);
         });
   }
 
-  Widget slidableListTile(HistoryModel model) {
+  Widget slidableListTile(ConversationModel model) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Slidable(
@@ -102,33 +104,36 @@ class HistoryPage extends GetView<HistoryController> {
     );
   }
 
-  Widget historyView(HistoryModel historyModel) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: ColorConstant.colorVeryLightGray,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppText(
-                  historyModel.historyTitle,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-                AppText(historyModel.time,
-                    fontSize: 12, fontColor: ColorConstant.colorDarkGray)
-              ],
+  Widget historyView(ConversationModel historyModel) {
+    return InkWell(
+      onTap: ()=>RouterHelper.gotoPreviousChatPage(historyModel),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: ColorConstant.colorVeryLightGray,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    historyModel.title,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  AppText(historyModel.createdAt.toString(),
+                      fontSize: 12, fontColor: ColorConstant.colorDarkGray)
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          const AppImage(
-              image: AssetConstant.icForwardArrow, height: 20, width: 20),
-        ],
+            const SizedBox(width: 10),
+            const AppImage(
+                image: AssetConstant.icForwardArrow, height: 20, width: 20),
+          ],
+        ),
       ),
     );
   }

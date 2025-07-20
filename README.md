@@ -4,17 +4,26 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Flutter SDK: 3.32.4
 
-A few resources to get you started if this is your first Flutter project:
+git clone https://github.com/lajiparmar/ai_assistance.git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🚀 Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ✅ Clean architecture with scalable folder structure
+- ✅ State management with [GetX](https://pub.dev/packages/get)
+- ✅ Navigation using GetX & route bindings
+- ✅ Persistent storage using SharedPreferences
+- ✅ Theme switching (Dark/Light Mode)
+- ✅ Bottom navigation with state retention
+- ✅ Responsive UI for mobile & tablet
 
 
 build runner commnad
 - dart pub run build_runner build --delete-conflicting-outputs
+
+build apk
+- flutter build apk
+
+
+

@@ -1,16 +1,17 @@
 import 'package:my_assistance/app_import.dart';
 
-class ChatController extends GetxController {
+class PreviousChatController extends GetxController {
   TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
   String chatID = DateTime.now().microsecondsSinceEpoch.toString();
   RxBool isAdding = false.obs;
-  RxList<ChatModel> chatList = <ChatModel>[].obs;
+  RxList<ChatMessageModel> chatList = <ChatMessageModel>[].obs;
   @override
   void onInit() {
     print('previous_chat list empty or not ${chatList.isEmpty}');
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      getChatList();
       scrollToBottom();
       //  controller.getResponse();
     });
@@ -35,21 +36,18 @@ class ChatController extends GetxController {
     scrollController.dispose();
     super.onClose();
   }
-
+ void getChatList(){
+    ConversationModel model=Get.arguments;
+    print('model is ${model.messages.length}');
+ }
   void addChat(String chat) {
     String senderChat = chat * 10;
-
-    if(chatList.isEmpty){
-      ChatService().addInitialChat(chatID, chat, chat, true);
-    }else{
-      ChatService().addMessage(chatID, ChatMessageModel(message: chat,sender:true ));
-
-    }
+    ChatService().addMessage(chatID, ChatMessageModel(message: chat,sender:true ));
     ChatService().addMessage(chatID, ChatMessageModel(message: senderChat,sender:false ));
 
     isAdding.value = true;
-    chatList.add(ChatModel(chat: chat, isUser: true));
-    chatList.add(ChatModel(chat: senderChat, isUser: false));
+    chatList.add(ChatMessageModel( sender: true, message: chat));
+    chatList.add(ChatMessageModel( sender: false, message: senderChat));
     Future.delayed(const Duration(seconds: 2), () {
       isAdding.value = false;
     });

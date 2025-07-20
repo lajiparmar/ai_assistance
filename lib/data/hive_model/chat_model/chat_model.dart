@@ -1,18 +1,38 @@
-import 'package:my_assistance/app_import.dart';
-import 'chat_model.g.dart';
+import 'package:hive/hive.dart';
+part 'chat_model.g.dart';
 @HiveType(typeId: 0)
-class UserModel {
+class ChatMessageModel extends HiveObject {
   @HiveField(0)
-  final String chat;
+  bool sender;
 
   @HiveField(1)
-  final String time;
+  String message;
+
+
+  ChatMessageModel({
+    required this.sender,
+    required this.message,
+  });
+}
+
+@HiveType(typeId: 1)
+class ConversationModel extends HiveObject {
+  @HiveField(0)
+  String id;
+
+  @HiveField(1)
+  String title;
 
   @HiveField(2)
-  final bool isUser;
+  DateTime createdAt;
 
   @HiveField(3)
-  final bool chatId;
+  List<ChatMessageModel> messages;
 
-  const UserModel(this.time, this.chat, this.isUser, this.chatId);
+  ConversationModel({
+    required this.id,
+    required this.title,
+    required this.createdAt,
+    required this.messages,
+  });
 }
